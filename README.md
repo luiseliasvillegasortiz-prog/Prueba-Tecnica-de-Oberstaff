@@ -5,7 +5,7 @@ Resolucion completa de la prueba tecnica "Integracion de Sistemas y Automatizaci
 ## Autor
 
 - Nombre: **Luis Villegas**
-- Perfil GitHub/GitLab: **(agregar enlace de perfil antes de enviar)**
+- Perfil GitHub/GitLab: https://github.com/luiseliasvillegasortiz-prog/Prueba-Tecnica-de-Oberstaff
 
 ## Ejecucion rapida para reclutador
 
