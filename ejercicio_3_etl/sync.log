@@ -1,0 +1,27 @@
+[2026-04-09T12:38:46] ETL ejecutado
+- filas_procesadas: 100
+- filas_con_horas_imputadas: 74
+- filas_sin_horas: 26
+- output_json: C:\Users\luise\OneDrive\Desktop\LuisVillegas_PruebaTecnica_Oberstaff\ejercicio_3_etl\output\interv_analitica_20260409_123846.json
+- output_csv: C:\Users\luise\OneDrive\Desktop\LuisVillegas_PruebaTecnica_Oberstaff\ejercicio_3_etl\output\interv_analitica_20260409_123846.csv
+- incidencias:
+  [INFO] Zona horaria asumida para interpretar ISO sin offset: Europe/Madrid
+
+[2026-04-09T12:43:39] ETL ejecutado
+- filas_procesadas: 100
+- filas_con_horas_imputadas: 74
+- filas_sin_horas: 26
+- output_json: C:\Users\luise\OneDrive\Desktop\LuisVillegas_PruebaTecnica_Oberstaff\ejercicio_3_etl\output\interv_analitica_20260409_124339.json
+- output_csv: C:\Users\luise\OneDrive\Desktop\LuisVillegas_PruebaTecnica_Oberstaff\ejercicio_3_etl\output\interv_analitica_20260409_124339.csv
+- incidencias:
+  [INFO] Zona horaria asumida para interpretar ISO sin offset: Europe/Madrid
+
+[2026-04-09T13:23:30] ETL ejecutado
+- filas_procesadas: 100
+- filas_con_horas_imputadas: 74
+- filas_sin_horas: 26
+- output_json: C:\Users\luise\OneDrive\Desktop\LuisVillegas_PruebaTecnica_Oberstaff\ejercicio_3_etl\output\interv_analitica_20260409_132330.json
+- output_csv: C:\Users\luise\OneDrive\Desktop\LuisVillegas_PruebaTecnica_Oberstaff\ejercicio_3_etl\output\interv_analitica_20260409_132330.csv
+- incidencias:
+  [INFO] Zona horaria asumida para interpretar ISO sin offset: Europe/Madrid
+

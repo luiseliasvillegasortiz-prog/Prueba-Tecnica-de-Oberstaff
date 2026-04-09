@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Climasur - Prueba Tecnica</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root { color-scheme: light dark; }
+      * { box-sizing: border-box; }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 16px;
+      }
+      .container {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      h1 { margin: 0 0 12px; font-size: clamp(22px, 3.2vw, 40px); }
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .card { border: 1px solid #6664; border-radius: 10px; padding: 12px; min-height: 92px; }
+      .card h3 { margin: 0 0 8px; font-size: 13px; opacity: .85; }
+      .card p { margin: 0; font-size: clamp(20px, 2.2vw, 30px); font-weight: bold; }
+      .charts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 16px;
+      }
+      .chart-card {
+        border: 1px solid #6664;
+        border-radius: 10px;
+        padding: 10px;
+        min-height: 320px;
+        height: min(42vh, 420px);
+      }
+      .chart-card canvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      .hint { margin-top: 16px; font-size: 12px; opacity: .8; }
+
+      @media (max-width: 768px) {
+        body { padding: 12px; }
+        .chart-card { min-height: 280px; height: 320px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Dashboard Operativo - Climasur</h1>
+      <div class="kpis">
+        <div class="card"><h3>Total intervenciones</h3><p id="kpi-total">-</p></div>
+        <div class="card"><h3>Total cerradas</h3><p id="kpi-cerradas">-</p></div>
+        <div class="card"><h3>Total pendientes</h3><p id="kpi-pendientes">-</p></div>
+        <div class="card"><h3>Coste total</h3><p id="kpi-coste">-</p></div>
+        <div class="card"><h3>Venta total</h3><p id="kpi-venta">-</p></div>
+      </div>
+
+      <div class="charts">
+        <div class="chart-card"><canvas id="chartEstados"></canvas></div>
+        <div class="chart-card"><canvas id="chartProvincias"></canvas></div>
+        <div class="chart-card"><canvas id="chartTipos"></canvas></div>
+      </div>
+
+      <p class="hint">
+        Fuente: endpoints de la API local (`/kpis/resumen` y `/intervenciones?page=1&limit=100`).
+      </p>
+    </div>
+
+    <script>
+      const money = (n) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(n || 0);
+      const countBy = (rows, field) => {
+        const map = {};
+        for (const row of rows) {
+          const key = (row[field] || "Sin dato").trim() || "Sin dato";
+          map[key] = (map[key] || 0) + 1;
+        }
+        return map;
+      };
+
+      function chartOptions(title) {
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: { display: true, text: title },
+            legend: { labels: { boxWidth: 14, usePointStyle: true } }
+          }
+        };
+      }
+
+      async function loadDashboard() {
+        const [kpis, interv] = await Promise.all([
+          fetch("/kpis/resumen").then((r) => r.json()),
+          fetch("/intervenciones?page=1&limit=100").then((r) => r.json())
+        ]);
+
+        document.getElementById("kpi-total").textContent = kpis.total_intervenciones;
+        document.getElementById("kpi-cerradas").textContent = kpis.total_cerradas;
+        document.getElementById("kpi-pendientes").textContent = kpis.total_pendientes;
+        document.getElementById("kpi-coste").textContent = money(kpis.coste_total);
+        document.getElementById("kpi-venta").textContent = money(kpis.venta_total);
+
+        const rows = interv.data || [];
+        const estados = countBy(rows, "ESTADO");
+        const provincias = countBy(rows, "PROVINCIA_SEDE");
+        const tipos = countBy(rows, "TIPO");
+
+        new Chart(document.getElementById("chartEstados"), {
+          type: "doughnut",
+          data: { labels: Object.keys(estados), datasets: [{ label: "Estados", data: Object.values(estados) }] },
+          options: chartOptions("Distribucion por estado")
+        });
+
+        const provSorted = Object.entries(provincias).sort((a, b) => b[1] - a[1]).slice(0, 8);
+        new Chart(document.getElementById("chartProvincias"), {
+          type: "bar",
+          data: {
+            labels: provSorted.map(([k]) => k),
+            datasets: [{ label: "Intervenciones", data: provSorted.map(([, v]) => v) }]
+          },
+          options: { ...chartOptions("Top provincias por volumen"), scales: { y: { beginAtZero: true } } }
+        });
+
+        new Chart(document.getElementById("chartTipos"), {
+          type: "bar",
+          data: { labels: Object.keys(tipos), datasets: [{ label: "Intervenciones", data: Object.values(tipos) }] },
+          options: { ...chartOptions("Distribucion por tipo"), scales: { y: { beginAtZero: true } } }
+        });
+      }
+
+      loadDashboard().catch((error) => {
+        document.body.insertAdjacentHTML("beforeend", `<pre>Error cargando dashboard: ${error.message}</pre>`);
+      });
+    </script>
+  </body>
+</html>

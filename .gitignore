@@ -1,0 +1,16 @@
+# Node.js
+**/node_modules/
+npm-debug.log*
+
+# Build / cache
+**/dist/
+**/.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS / Editor
+.DS_Store
+Thumbs.db

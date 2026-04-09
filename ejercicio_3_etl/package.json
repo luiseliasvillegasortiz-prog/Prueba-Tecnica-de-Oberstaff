@@ -1,0 +1,15 @@
+{
+  "name": "ejercicio_3_etl",
+  "version": "1.0.0",
+  "description": "Script ETL para tabla analitica de intervenciones Climasur.",
+  "main": "sync.js",
+  "scripts": {
+    "start": "node sync.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^5.6.0"
+  }
+}
