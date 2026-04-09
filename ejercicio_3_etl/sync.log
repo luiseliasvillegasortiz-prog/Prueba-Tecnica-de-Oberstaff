@@ -25,3 +25,12 @@
 - incidencias:
   [INFO] Zona horaria asumida para interpretar ISO sin offset: Europe/Madrid
 
+[2026-04-09T13:59:32] ETL ejecutado
+- filas_procesadas: 100
+- filas_con_horas_imputadas: 74
+- filas_sin_horas: 26
+- output_json: C:\Users\luise\OneDrive\Desktop\LuisVillegas_PruebaTecnica_Oberstaff\ejercicio_3_etl\output\interv_analitica_20260409_135932.json
+- output_csv: C:\Users\luise\OneDrive\Desktop\LuisVillegas_PruebaTecnica_Oberstaff\ejercicio_3_etl\output\interv_analitica_20260409_135932.csv
+- incidencias:
+  [INFO] Zona horaria asumida para interpretar ISO sin offset: Europe/Madrid
+

@@ -1,6 +1,6 @@
 -- MySQL 8.x - Script de carga para entorno local Windows
 -- Ajustado a:
--- 1) Rutas absolutas con /
+-- 1) Rutas absolutas actualizadas (Sin carpeta .cursor)
 -- 2) LOAD DATA LOCAL INFILE
 -- 3) Fechas ISO con 'T' y control de truncados
 -- 4) Integridad referencial desactivada durante carga masiva
@@ -12,7 +12,7 @@ SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- Carga tabla maestra (intervenciones)
-LOAD DATA LOCAL INFILE 'C:/Users/luise/OneDrive/Desktop/LuisVillegas_PruebaTecnica_Oberstaff/.cursor/skills/muestras/vista_climasur_intervenciones.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/luise/OneDrive/Desktop/LuisVillegas_PruebaTecnica_Oberstaff/muestras/vista_climasur_intervenciones.csv'
 INTO TABLE intervenciones
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -37,7 +37,7 @@ SET
   FECHA_FINALIZACION = IF(@FECHA_FINALIZACION_RAW = '', NULL, STR_TO_DATE(@FECHA_FINALIZACION_RAW, '%Y-%m-%dT%H:%i:%s'));
 
 -- Carga horas imputadas
-LOAD DATA LOCAL INFILE 'C:/Users/luise/OneDrive/Desktop/LuisVillegas_PruebaTecnica_Oberstaff/.cursor/skills/muestras/vista_climasur_intervenciones_horas.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/luise/OneDrive/Desktop/LuisVillegas_PruebaTecnica_Oberstaff/muestras/vista_climasur_intervenciones_horas.csv'
 INTO TABLE intervenciones_horas
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -53,7 +53,7 @@ SET
   FECHA_FIN = IF(@FECHA_FIN_RAW = '', NULL, STR_TO_DATE(@FECHA_FIN_RAW, '%Y-%m-%dT%H:%i:%s'));
 
 -- Carga materiales (PK tecnica auto_increment)
-LOAD DATA LOCAL INFILE 'C:/Users/luise/OneDrive/Desktop/LuisVillegas_PruebaTecnica_Oberstaff/.cursor/skills/muestras/vista_climasur_intervenciones_materiales.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/luise/OneDrive/Desktop/LuisVillegas_PruebaTecnica_Oberstaff/muestras/vista_climasur_intervenciones_materiales.csv'
 INTO TABLE intervenciones_materiales
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -66,7 +66,7 @@ IGNORE 1 LINES
 );
 
 -- Carga desplazamientos
-LOAD DATA LOCAL INFILE 'C:/Users/luise/OneDrive/Desktop/LuisVillegas_PruebaTecnica_Oberstaff/.cursor/skills/muestras/vista_climasur_desplazamientos.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/luise/OneDrive/Desktop/LuisVillegas_PruebaTecnica_Oberstaff/muestras/vista_climasur_desplazamientos.csv'
 INTO TABLE desplazamientos
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -82,4 +82,3 @@ SET
 
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 SET sql_mode = @OLD_SQL_MODE;
-
